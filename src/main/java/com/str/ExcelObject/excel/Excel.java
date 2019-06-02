@@ -206,16 +206,18 @@ public class Excel {
                             HSSFCell hssfCell = hssfRow.createCell(cellIndex++);
                             Object value = field.get(o);
                             if (!field.getType().isArray()) {
-                                if (value instanceof String) {
-                                    hssfCell.setCellValue((String) value);
-                                } else if (value instanceof Number) {
-                                    hssfCell.setCellValue(value.toString());
-                                } else if (value instanceof Date) {
-                                    hssfCell.setCellValue(this.dateFormat.format(value));
-                                } else if (value instanceof Boolean) {
-                                    hssfCell.setCellValue((Boolean) value);
-                                } else {
-                                    hssfCell.setCellValue(value.toString());
+                                if (null != value) {
+                                    if (value instanceof String) {
+                                        hssfCell.setCellValue((String) value);
+                                    } else if (value instanceof Number) {
+                                        hssfCell.setCellValue(value.toString());
+                                    } else if (value instanceof Date) {
+                                        hssfCell.setCellValue(this.dateFormat.format(value));
+                                    } else if (value instanceof Boolean) {
+                                        hssfCell.setCellValue((Boolean) value);
+                                    } else {
+                                        hssfCell.setCellValue(value.toString());
+                                    }
                                 }
                             } else {
                                 hssfCell.setCellValue(Arrays.toString((Object[]) value));
