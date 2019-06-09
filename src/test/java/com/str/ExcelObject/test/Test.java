@@ -1,23 +1,15 @@
-# ExcelObject
-简化Excel文件创建，并可持续化对Excel文件进行更新的项目
+package com.str.ExcelObject.test;
 
----
-### Apache Maven
+import com.str.ExcelObject.excel.Excel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-```xml
-<dependency>
-  <groupId>com.github.shi-tou-ren</groupId>
-  <artifactId>eo</artifactId>
-  <version>1.0.t</version>
-</dependency>
-```
-
----
-### 简单使用
-
-
-```
 public class Test {
 
     private Integer id;
@@ -31,7 +23,7 @@ public class Test {
         //创建空白excel文件
         Excel excel = new Excel();
         //通过配置创建空白表格
-        Excel.Sheet sheet = excel.createSheet("id:id,name:名称,time:时间");
+        Excel.Sheet sheet = excel.createSheet("{id:id,name:名称,time:时间}");
         //生成表格数据1
         List<Test> testList1 = new ArrayList<Test>();
         Test test1 = new Test();
@@ -65,7 +57,7 @@ public class Test {
         OutputStream outputStream = new FileOutputStream(new File("D:\\test.xls"));
         excel.export(outputStream);
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -91,21 +83,3 @@ public class Test {
     }
 
 }
-
-```
-
----
-### 配置文件
-配置文件格式为:  
-- {成员属性名称:对应的表格列名称,成员属性名称:对应的表格列名称}
-- 成员属性名称:对应的表格列名称,成员属性名称:对应的表格列名称
- 
-
-
-例：
-- {id:id,name:名称,time:时间}
-- id:id,name:名称,time:时间
-
----
-### 注意事项
-1: 导出的文件格式请设置为.xls格式；
