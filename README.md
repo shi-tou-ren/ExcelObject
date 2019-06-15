@@ -3,7 +3,7 @@
 
 ---
 ### 文档
-[点击查看文档](https://github.com/shi-tou-ren/ExcelObject/1.0.t/doc/index.html)
+[点击查看文档](https://shi-tou-ren.github.io/ExcelObject/index.html)
 
 ---
 ### Apache Maven
