@@ -21,21 +21,18 @@
 
     <developers>
         <developer>
-            <name>wangchencehn</name>
+            <name>wangchenchen</name>
             <email>17689465493@163.com</email>
         </developer>
     </developers>
 
     <scm>
-        <!--SCM的URL,该URL描述了版本库和如何连接到版本库。欲知详情，请看SCMs提供的URL格式和列表。该连接只读。-->
         <connection>
             scm:git:git@github.com:shi-tou-ren/ExcelObject.git
         </connection>
-        <!--给开发者使用的，类似connection元素。即该连接不仅仅只读-->
         <developerConnection>
             scm:git:git@github.com:shi-tou-ren/ExcelObject.git
         </developerConnection>
-        <!--指向项目的可浏览SCM库（例如ViewVC或者Fisheye）的URL。-->
         <url>git@github.com:shi-tou-ren/ExcelObject.git</url>
     </scm>
 
