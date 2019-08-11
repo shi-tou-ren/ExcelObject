@@ -1,5 +1,6 @@
 package com.str.ExcelObject.excel;
 
+import com.str.ExcelObject.exception.ExcelExportException;
 import com.str.ExcelObject.exception.SheetConfigException;
 import com.str.ExcelObject.exception.SheetCreateException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -19,6 +20,8 @@ import java.util.*;
  * @author wangchenchen
  */
 public class Excel {
+
+    public final static String EXCEL_FILE_SUFFIX_XLS = ".xls";
 
     private ArrayList<Sheet> sheets = new ArrayList<Sheet>(1);
 
@@ -116,23 +119,50 @@ public class Excel {
     /**
      * 导出Excel为指定文件 注意导出文件格式为.xls
      * @param file 指定的文件目录
-     * @throws FileNotFoundException 目录异常
+     * @throws IOException 文件导出异常
      */
-    public void export(File file) throws FileNotFoundException {
+    public void export(File file) throws IOException {
         this.export(new FileOutputStream(file));
+    }
+
+    /**
+     * 导出Excel到http请求的返回中
+     * @param response http请求协议的返回
+     * @since 1.1.t
+     */
+    public void export(javax.servlet.http.HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        OutputStream outputStream = response.getOutputStream();
+        this.export(outputStream);
     }
 
     /**
      * 导出Excel到输出流中
      * @param outputStream 指定的输出流
      */
-    public void export(OutputStream outputStream) {
+    public void export(OutputStream outputStream) throws ExcelExportException {
         try {
             this.workbook.write(outputStream);
-            outputStream.flush();
-            outputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExcelExportException(e.getMessage());
+        } finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                throw new ExcelExportException(e.getMessage());
+            } finally {
+                try {
+                    outputStream.flush();
+                } catch (IOException e) {
+                    throw new ExcelExportException(e.getMessage());
+                } finally {
+                    try {
+                        outputStream.close();
+                    } catch (IOException e) {
+                        throw new ExcelExportException(e.getMessage());
+                    }
+                }
+            }
         }
     }
 
@@ -173,9 +203,6 @@ public class Excel {
             this.columnMapping = columnMapping;
         }
 
-        /**
-         * -----------------------表名称操作-----------------------
-         */
         /**
          * 获取当前表的名称
          * @return 当前表的名称
